@@ -3,6 +3,12 @@
   background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
 }
 
+.field {
+  margin-left: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
 .search-form {
   min-height: 20vh;
   display: flex;
@@ -21,15 +27,17 @@ form input,
   border: none;
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: white !important;
-    color: #0275d8;
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: white !important;
+  color: #0275d8;
 }
 
 .events {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 50%;
   justify-content: space-around;
   flex-wrap: wrap;
   background-color: #304758;
@@ -40,4 +48,12 @@ form input,
 .noEventMsg {
   align-self: center;
   color: white;
+}
+
+.container {
+  min-width: 60%;
+}
+
+thead {
+  color: rgb(165, 165, 165);
 }

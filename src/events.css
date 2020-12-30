@@ -1,0 +1,25 @@
+.event {
+  border-radius: 10px;
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  background-color: rgb(31, 31, 31);
+  color: white;
+}
+
+.event-info {
+  margin: 10px;
+  width: 70%;
+}
+
+.event-img {
+  margin: 5px;
+}
+
+.image {
+  border-radius: 10px;
+  width: 20rem;
+  height: 15rem;
+}
