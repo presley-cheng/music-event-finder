@@ -8,6 +8,7 @@ function App() {
   // Constant var
   const firstQuery = "drake";
   const unavailable_Msg = "Unavailable";
+  const unavailable_Url = "#";
   const unavailable_ImgUrl =
     "https://visualsound.com/2020products/smart-inventory-clearance/unavailable-image/";
 
@@ -98,7 +99,7 @@ function App() {
           type="text"
           value={inputText}
           onChange={updateInput}
-          placeholder="Enter Artist's Name"
+          placeholder="Enter a keyword (e.g. Artist's Name)"
         />
         <button className="btn btn-primary" type="submit">
           <i className="fas fa-search"></i>
@@ -164,15 +165,15 @@ function App() {
                       artistUrl={
                         song.artistViewUrl
                           ? song.artistViewUrl
-                          : unavailable_Msg
+                          : unavailable_Url
                       }
                       trackUrl={
-                        song.trackViewUrl ? song.trackViewUrl : unavailable_Msg
+                        song.trackViewUrl ? song.trackViewUrl : unavailable_Url
                       }
                       albumUrl={
                         song.collectionViewUrl
                           ? song.collectionViewUrl
-                          : unavailable_Msg
+                          : unavailable_Url
                       }
                     />
                   ))
