@@ -27,9 +27,7 @@ form input,
   border: none;
 }
 
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:visited {
+.btn-primary:hover {
   background-color: white !important;
   color: #0275d8;
 }
@@ -56,4 +54,17 @@ form input,
 
 thead {
   color: rgb(165, 165, 165);
+}
+
+.dropdown {
+  margin-left: 30px;
+}
+
+.dropdown-menu {
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-menu option:hover {
+  background-color: rgb(207, 207, 207);
 }

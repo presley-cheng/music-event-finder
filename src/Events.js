@@ -1,16 +1,16 @@
 import React from "react";
 import "./events.css";
 
-const Events = ({ name, note, price, location, date, time, url, images }) => {
+const Events = ({ name, note, minPrice, maxPrice, address, city, country, date, time, url, images }) => {
   return (
     <div className="event">
       <div className="event-info">
         <h3>{name}</h3>
         <p>{note}</p>
-        <p>Lowest Price: ${price}</p>
-        <p>Location: {location}</p>
+        <p><b>Price</b> : ${minPrice} - ${maxPrice}</p>
+        <p><b>Location</b>: {address}, {city}, {country}</p>
         <p>
-          Date/Time: {date} {time} PST
+          <b>Date/Time</b>: {date} {time} PST
         </p>
         <a href={url} className="btn btn-primary">
           Go to Ticket Master

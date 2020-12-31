@@ -36,7 +36,7 @@ function App() {
     // replace space with "+"
     const processedQuery = searchQuery.replace(" ", "+");
     const song_response = await fetch(
-      `https://itunes.apple.com/search?term=${processedQuery}&limit=15&media=music`
+      `https://itunes.apple.com/search?term=${processedQuery}&limit=10&media=music`
     );
 
     const song_data = await song_response.json();
@@ -59,6 +59,7 @@ function App() {
     // prevent not finding events
     try {
       setEvents(TM_data._embedded.events);
+      console.log(TM_data._embedded.events);
     } catch (err) {
       setEvents([]);
     }
@@ -104,6 +105,21 @@ function App() {
         <button className="btn btn-primary" type="submit">
           <i className="fas fa-search"></i>
         </button>
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-toggle="dropdown"
+          >
+            Preferences
+          </button>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <option value="all">All</option>
+            <option value="seven">In 7 days</option>
+            <option value="thirty">In 30 days</option>
+            <option value="sixty">In 60 days</option>
+          </div>
+        </div>
       </form>
       <div className="field">
         <div className="events">
@@ -112,14 +128,29 @@ function App() {
                 <Events
                   name={event.name ? event.name : unavailable_Msg}
                   note={event.pleaseNote ? event.pleaseNote : unavailable_Msg}
-                  price={
+                  minPrice={
                     event.priceRanges
                       ? event.priceRanges[0].min
                       : unavailable_Msg
                   }
-                  location={
+                  maxPrice={
+                    event.priceRanges
+                      ? event.priceRanges[0].max
+                      : unavailable_Msg
+                  }
+                  address={
                     event._embedded
                       ? event._embedded.venues[0].address.line1
+                      : unavailable_Msg
+                  }
+                  city={
+                    event._embedded
+                      ? event._embedded.venues[0].city.name
+                      : unavailable_Msg
+                  }
+                  country={
+                    event._embedded
+                      ? event._embedded.venues[0].country.countryCode
                       : unavailable_Msg
                   }
                   date={
@@ -147,6 +178,7 @@ function App() {
                 <td>TITLE</td>
                 <td>ARTIST</td>
                 <td>ALBUM</td>
+                <td>PREVIEW</td>
               </tr>
             </thead>
             <tbody>
@@ -174,6 +206,9 @@ function App() {
                         song.collectionViewUrl
                           ? song.collectionViewUrl
                           : unavailable_Url
+                      }
+                      previewUrl={
+                        song.previewUrl ? song.previewUrl : unavailable_Url
                       }
                     />
                   ))

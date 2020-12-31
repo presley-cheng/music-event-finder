@@ -8,7 +8,15 @@ const Songs = ({
   artistUrl,
   trackUrl,
   albumUrl,
+  previewUrl,
 }) => {
+  // update audio on page refresh
+  const refreshAudio = () => {
+    let audioElement = document.getElementById("audioElem");
+    audioElement.src = previewUrl;
+    audioElement.load();
+  };
+
   return (
     <tr>
       <td>
@@ -19,6 +27,14 @@ const Songs = ({
       </td>
       <td>
         <a href={albumUrl}>{albumName}</a>
+      </td>
+      <td>
+        <audio
+          id="audioElem"
+          onChange={refreshAudio}
+          src={previewUrl}
+          controls
+        ></audio>
       </td>
     </tr>
   );
