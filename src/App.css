@@ -56,15 +56,6 @@ thead {
   color: rgb(165, 165, 165);
 }
 
-.dropdown {
+.filter-date {
   margin-left: 30px;
-}
-
-.dropdown-menu {
-  text-align: center;
-  cursor: pointer;
-}
-
-.dropdown-menu option:hover {
-  background-color: rgb(207, 207, 207);
 }

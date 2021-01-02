@@ -11,6 +11,10 @@ function App() {
   const unavailable_Url = "#";
   const unavailable_ImgUrl =
     "https://visualsound.com/2020products/smart-inventory-clearance/unavailable-image/";
+  const DATE_all = "date_all";
+  const DATE_seven = "date_seven";
+  const DATE_thirty = "date_thirty";
+  const DATE_sixty = "date_sixty";
 
   // Ticketmaster API info
   const TM_package = "discovery";
@@ -22,7 +26,22 @@ function App() {
   const [query, setQuery] = useState(firstQuery);
   const [events, setEvents] = useState([]);
   const [songs, setSongs] = useState([]);
+  const [status, setStatus] = useState(DATE_all);
+  const [filterEvents, setFilterEvents] = useState([]);
 
+  // SEARCHING STUFF
+  const updateInput = (e) => {
+    setInputText(e.target.value);
+  };
+
+  const getSearch = (e) => {
+    // prevent page from refreshing
+    e.preventDefault();
+    setQuery(inputText);
+    setInputText("");
+  };
+
+  // API STUFF
   useEffect(() => {
     // fetching ticket master info
     getEvents(query);
@@ -59,21 +78,9 @@ function App() {
     // prevent not finding events
     try {
       setEvents(TM_data._embedded.events);
-      console.log(TM_data._embedded.events);
     } catch (err) {
       setEvents([]);
     }
-  };
-
-  const updateInput = (e) => {
-    setInputText(e.target.value);
-  };
-
-  const getSearch = (e) => {
-    // prevent page from refreshing
-    e.preventDefault();
-    setQuery(inputText);
-    setInputText("");
   };
 
   const eventNotFound = () => {
@@ -92,6 +99,47 @@ function App() {
     );
   };
 
+  // DROPDOWN MENU STUFF
+  const statusHandler = (e) => {
+    setStatus(e.target.value);
+  };
+
+  // filter events handler
+  useEffect(() => {
+    filterEventsHandler();
+  }, [status]);
+
+  const filterEventsHandler = () => {
+    switch (status) {
+      case DATE_seven:
+        setFilterEvents(events.filter((event) => withinDateRange(event, 7)));
+        break;
+      case DATE_thirty:
+        setFilterEvents(events.filter((event) => withinDateRange(event, 30)));
+        break;
+      case DATE_sixty:
+        setFilterEvents(events.filter((event) => withinDateRange(event, 60)));
+        break;
+      default:
+        setFilterEvents(events);
+        break;
+    }
+  };
+
+  const withinDateRange = (event, range) => {
+    let date = new Date();
+    date.setDate(date.getDate() + range);
+    const eventDate = new Date(event.dates.start.dateTime);
+    return eventDate.getTime() <= date.getTime();
+  };
+
+  // for testing
+  useEffect(() => {
+    filterEvents.forEach((event) => {
+      console.log(event);
+    });
+  }, [filterEvents]);
+
   return (
     <div className="App">
       <form onSubmit={getSearch} className="search-form">
@@ -105,20 +153,13 @@ function App() {
         <button className="btn btn-primary" type="submit">
           <i className="fas fa-search"></i>
         </button>
-        <div className="dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            data-toggle="dropdown"
-          >
-            Preferences
-          </button>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <option value="all">All</option>
-            <option value="seven">In 7 days</option>
-            <option value="thirty">In 30 days</option>
-            <option value="sixty">In 60 days</option>
-          </div>
+        <div className="filter-date">
+          <select className="btn btn-secondary" onChange={statusHandler}>
+            <option value={DATE_all}>All</option>
+            <option value={DATE_seven}>In 7 days</option>
+            <option value={DATE_thirty}>In 30 days</option>
+            <option value={DATE_sixty}>In 60 days</option>
+          </select>
         </div>
       </form>
       <div className="field">
@@ -136,6 +177,11 @@ function App() {
                   maxPrice={
                     event.priceRanges
                       ? event.priceRanges[0].max
+                      : unavailable_Msg
+                  }
+                  currency={
+                    event.priceRanges
+                      ? event.priceRanges[0].currency
                       : unavailable_Msg
                   }
                   address={
