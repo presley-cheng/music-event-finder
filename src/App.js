@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Events from "./Events";
+import EventsList from "./EventsList";
 import Songs from "./Songs";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
@@ -83,14 +83,6 @@ function App() {
     }
   };
 
-  const eventNotFound = () => {
-    return (
-      <div className="noEventMsg">
-        <h2>No Events Found</h2>
-      </div>
-    );
-  };
-
   const songNotFound = () => {
     return (
       <div className="noSongMsg">
@@ -104,10 +96,16 @@ function App() {
     setStatus(e.target.value);
   };
 
-  // filter events handler
+  // filter events handler when dropdown options selected
   useEffect(() => {
     filterEventsHandler();
   }, [status]);
+
+  // filter events handler when new search
+  useEffect(() => {
+    setFilterEvents(events);
+    document.getElementById("selectMenu").selectedIndex = 0;
+  }, [events]);
 
   const filterEventsHandler = () => {
     switch (status) {
@@ -154,7 +152,11 @@ function App() {
           <i className="fas fa-search"></i>
         </button>
         <div className="filter-date">
-          <select className="btn btn-secondary" onChange={statusHandler}>
+          <select
+            id="selectMenu"
+            className="btn btn-secondary"
+            onChange={statusHandler}
+          >
             <option value={DATE_all}>All</option>
             <option value={DATE_seven}>In 7 days</option>
             <option value={DATE_thirty}>In 30 days</option>
@@ -164,58 +166,13 @@ function App() {
       </form>
       <div className="field">
         <div className="events">
-          {events && events.length > 0
-            ? events.map((event) => (
-                <Events
-                  name={event.name ? event.name : unavailable_Msg}
-                  note={event.pleaseNote ? event.pleaseNote : unavailable_Msg}
-                  minPrice={
-                    event.priceRanges
-                      ? event.priceRanges[0].min
-                      : unavailable_Msg
-                  }
-                  maxPrice={
-                    event.priceRanges
-                      ? event.priceRanges[0].max
-                      : unavailable_Msg
-                  }
-                  currency={
-                    event.priceRanges
-                      ? event.priceRanges[0].currency
-                      : unavailable_Msg
-                  }
-                  address={
-                    event._embedded
-                      ? event._embedded.venues[0].address.line1
-                      : unavailable_Msg
-                  }
-                  city={
-                    event._embedded
-                      ? event._embedded.venues[0].city.name
-                      : unavailable_Msg
-                  }
-                  country={
-                    event._embedded
-                      ? event._embedded.venues[0].country.countryCode
-                      : unavailable_Msg
-                  }
-                  date={
-                    event.dates.start.localDate
-                      ? event.dates.start.localDate
-                      : unavailable_Msg
-                  }
-                  time={
-                    event.dates.start.localTime
-                      ? event.dates.start.localTime
-                      : unavailable_Msg
-                  }
-                  url={event.url ? event.url : unavailable_Msg}
-                  images={
-                    event.images ? event.images[0].url : unavailable_ImgUrl
-                  }
-                />
-              ))
-            : eventNotFound()}
+          <EventsList
+            filteredEvents={filterEvents}
+            events={events}
+            unavailable_Msg={unavailable_Msg}
+            unavailable_ImgUrl={unavailable_ImgUrl}
+            unavailable_Url={unavailable_Url}
+          />
         </div>
         <div className="container">
           <table className="table table-dark table-hover">
