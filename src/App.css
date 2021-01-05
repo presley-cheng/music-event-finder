@@ -43,8 +43,9 @@ form input,
   min-height: 80vh;
 }
 
-.noEventMsg {
-  align-self: center;
+.noEventMsg,
+.noSongMsg {
+  text-align: center;
   color: white;
 }
 
