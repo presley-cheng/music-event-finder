@@ -38,7 +38,8 @@ form input,
   width: 50%;
   justify-content: space-around;
   flex-wrap: wrap;
-  background-color: #304758;
+  /* background-color: #304758; */
+  background-color: orange;
   border-radius: 5px;
   min-height: 80vh;
 }
