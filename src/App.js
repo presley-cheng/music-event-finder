@@ -54,8 +54,17 @@ function App() {
   const getSongs = async (searchQuery) => {
     // replace space with "+"
     const processedQuery = searchQuery.replace(" ", "+");
+    // const song_response = await fetch(
+    //   `https://itunes.apple.com/search?term=${processedQuery}&limit=10&media=music`
+    // );
     const song_response = await fetch(
-      `https://itunes.apple.com/search?term=${processedQuery}&limit=10&media=music`
+      `https://itunes.apple.com/search?term=${processedQuery}&limit=10&media=music`, {
+        method: 'GET',
+        header: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
     );
 
     const song_data = await song_response.json();
