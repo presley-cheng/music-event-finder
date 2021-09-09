@@ -6,7 +6,7 @@ import "./App.css";
 
 function App() {
   // Constant var
-  const firstQuery = "drake";
+  const firstQuery = "illenium";
   const unavailable_Msg = "Unavailable";
   const unavailable_Url = "#";
   const unavailable_ImgUrl =
@@ -96,18 +96,13 @@ function App() {
     setStatus(e.target.value);
   };
 
-  // filter events handler when dropdown options selected
-  useEffect(() => {
-    filterEventsHandler();
-  }, [status]);
-
   // filter events handler when new search
   useEffect(() => {
     setFilterEvents(events);
     document.getElementById("selectMenu").selectedIndex = 0;
   }, [events]);
 
-  const filterEventsHandler = () => {
+  useEffect(() => {
     switch (status) {
       case DATE_seven:
         setFilterEvents(events.filter((event) => withinDateRange(event, 7)));
@@ -122,7 +117,7 @@ function App() {
         setFilterEvents(events);
         break;
     }
-  };
+  }, [status, events]);
 
   const withinDateRange = (event, range) => {
     let date = new Date();
@@ -131,28 +126,22 @@ function App() {
     return eventDate.getTime() <= date.getTime();
   };
 
-  // for testing
-  useEffect(() => {
-    filterEvents.forEach((event) => {
-      console.log(event);
-    });
-  }, [filterEvents]);
-
   return (
     <div className="App">
-      <form onSubmit={getSearch} className="search-form">
-        <input
-          className="search-bar"
-          type="text"
-          value={inputText}
-          onChange={updateInput}
-          placeholder="Enter a keyword (e.g. Artist's Name)"
-        />
-        <button className="btn btn-primary" type="submit">
-          <i className="fas fa-search"></i>
-        </button>
-        <div className="filter-date">
-          <select
+      <div id="search-container">
+        <form onSubmit={getSearch} className="search-form">
+          <input
+            className="search-bar"
+            type="text"
+            value={inputText}
+            onChange={updateInput}
+            placeholder="Enter a keyword (e.g. Artist's Name)"
+          />
+          <button className="btn btn-primary" type="submit">
+            <i className="fas fa-search"></i>
+          </button>
+        </form>
+        <div className="filter-date"><select
             id="selectMenu"
             className="btn btn-secondary"
             onChange={statusHandler}
@@ -163,19 +152,22 @@ function App() {
             <option value={DATE_sixty}>In 60 days</option>
           </select>
         </div>
-      </form>
+      </div>
       <div className="field">
-        <div className="events">
-          <EventsList
-            filteredEvents={filterEvents}
-            events={events}
-            unavailable_Msg={unavailable_Msg}
-            unavailable_ImgUrl={unavailable_ImgUrl}
-            unavailable_Url={unavailable_Url}
-          />
-        </div>
-        <div className="container">
-          <table className="table table-dark table-hover">
+          <div className="events">
+            <h2>Upcoming Events</h2>
+            <div id="allEvents">
+              <EventsList
+                filteredEvents={filterEvents}
+                events={events}
+                unavailable_Msg={unavailable_Msg}
+                unavailable_ImgUrl={unavailable_ImgUrl}
+                unavailable_Url={unavailable_Url}
+              />
+            </div>
+          </div>
+          <table className="table table-dark table-hover" id="songTable">
+            <caption>Top 10 Songs</caption>
             <thead>
               <tr>
                 <td>TITLE</td>
@@ -218,7 +210,6 @@ function App() {
                 : songNotFound()}
             </tbody>
           </table>
-        </div>
       </div>
     </div>
   );
