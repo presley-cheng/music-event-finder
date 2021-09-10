@@ -32,17 +32,17 @@ const EventsList = ({filteredEvents, unavailable_Msg, unavailable_ImgUrl}) => {
                       : null
                   }
                   address={
-                    event._embedded.venues[0].address
+                    event._embedded && event._embedded.venues[0].address
                       ? event._embedded.venues[0].address.line1
                       : unavailable_Msg
                   }
                   city={
-                    event._embedded.venues[0].city
+                    event._embedded && event._embedded.venues[0].city
                       ? event._embedded.venues[0].city.name
                       : unavailable_Msg
                   }
                   country={
-                    event._embedded.venues[0].country
+                    event._embedded && event._embedded.venues[0].country
                       ? event._embedded.venues[0].country.countryCode
                       : unavailable_Msg
                   }
