@@ -134,7 +134,7 @@ function App() {
     const eventDate = new Date(event.dates.start.dateTime);
     return eventDate.getTime() <= date.getTime();
   };
-
+  
   return (
     <div className="App">
       <div id="search-container">
