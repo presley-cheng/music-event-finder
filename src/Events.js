@@ -1,7 +1,7 @@
 import React from "react";
 import "./events.css";
 
-const Events = ({ name, note, minPrice, maxPrice, currency, address, city, country, date, time, url, images }) => {
+const Events = ({ name, minPrice, maxPrice, currency, address, city, country, date, time, url, images }) => {
   
   const priceInfo = () => {
     let result = "";

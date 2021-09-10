@@ -1,7 +1,7 @@
 import React from "react";
 import Events from "./Events";
 
-const EventsList = ({filteredEvents, events, unavailable_Msg, unavailable_ImgUrl}) => {
+const EventsList = ({filteredEvents, unavailable_Msg, unavailable_ImgUrl}) => {
   const eventNotFound = () => {
     return (
       <div className="noEventMsg">
@@ -9,13 +9,13 @@ const EventsList = ({filteredEvents, events, unavailable_Msg, unavailable_ImgUrl
       </div>
     );
   };
+
     return (
         <div>
           {filteredEvents && filteredEvents.length > 0
             ? filteredEvents.map((event) => (
                 <Events
                   name={event.name ? event.name : unavailable_Msg}
-                  note={event.pleaseNote ? event.pleaseNote : unavailable_Msg}
                   minPrice={
                     event.priceRanges
                       ? event.priceRanges[0].min
@@ -32,17 +32,17 @@ const EventsList = ({filteredEvents, events, unavailable_Msg, unavailable_ImgUrl
                       : null
                   }
                   address={
-                    event._embedded
+                    event._embedded.venues[0].address
                       ? event._embedded.venues[0].address.line1
                       : unavailable_Msg
                   }
                   city={
-                    event._embedded
+                    event._embedded.venues[0].city
                       ? event._embedded.venues[0].city.name
                       : unavailable_Msg
                   }
                   country={
-                    event._embedded
+                    event._embedded.venues[0].country
                       ? event._embedded.venues[0].country.countryCode
                       : unavailable_Msg
                   }

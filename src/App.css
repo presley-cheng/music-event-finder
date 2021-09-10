@@ -7,7 +7,7 @@
 .App {
   min-height: 100vh;
   background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
-  padding: 6rem 1.5rem 1rem 1.5rem;
+  padding: 0 1.5rem;
 }
 
 caption {
@@ -22,12 +22,14 @@ caption {
 #search-container {
   display: flex;
   justify-content: center;
-  position: fixed;
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+  /* position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   margin-top: 2rem;
-  z-index: 100;
+  z-index: 100; */
 }
 
 .search-form {

@@ -55,7 +55,14 @@ function App() {
     // replace space with "+"
     const processedQuery = searchQuery.replace(" ", "+");
     const song_response = await fetch(
-      `https://itunes.apple.com/search?term=${processedQuery}&limit=10&media=music`
+      `https://itunes.apple.com/search?term=${processedQuery}&limit=10&media=music`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
     );
 
     const song_data = await song_response.json();
@@ -126,6 +133,13 @@ function App() {
     return eventDate.getTime() <= date.getTime();
   };
 
+  // for testing
+  useEffect(() => {
+    filterEvents.forEach((event) => {
+      console.log(event);
+    });
+  }, [filterEvents]);
+
   return (
     <div className="App">
       <div id="search-container">
@@ -159,7 +173,6 @@ function App() {
             <div id="allEvents">
               <EventsList
                 filteredEvents={filterEvents}
-                events={events}
                 unavailable_Msg={unavailable_Msg}
                 unavailable_ImgUrl={unavailable_ImgUrl}
                 unavailable_Url={unavailable_Url}
